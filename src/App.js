@@ -14,6 +14,18 @@ class App extends Component {
     }
   }
 
+  updateUserInformation = (newUser) => {
+    //take update user and put in my currentUser ^
+    const tempUser = {...this.state.currentUser}
+    //change state
+    tempUser.userName = newUser.userName
+    //set the state
+    console.log("About to set state with user: ", tempUser)
+    this.setState({ currentUser: tempUser })
+  }
+
+  
+
   render() {
     const HomeComponent = () => (
       <Home balance={this.state.balance} />
@@ -26,10 +38,14 @@ class App extends Component {
       />
     )
 
+    const logInComponent = () => (
+      <LogIn updateUserInformation={this.updateUserInformation} />
+    )
+
     return <Router>
         <Switch>
           {/* when you read this, do this */}
-          <Route exact path="/logIn" component={LogIn} />
+          <Route exact path="/logIn" render={logInComponent} />
 
           <Route exact path="/userProfile" render={UserProfileComponent} />
 

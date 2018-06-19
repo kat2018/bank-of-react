@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import { Redirect } from "react-router-dom"
 
 class LogIn extends Component {
     state = {
         user: {
-            userName: ''
-        }
+            userName: '',
+            password: ''
+        },
+        redirect: false
     }
 
     handleChange = (event) => {
@@ -19,8 +22,22 @@ class LogIn extends Component {
         this.setState({ user })
     }
 
+    handleSubmit = (event) => {
+        //stop the form
+        event.preventDefault()
+        //send state somewhere
+        this.props.updateUserInformation(this.state.user)
+        //send user forward
+        this.setState({ redirect: true })
+    
+    }
 
     render() {
+
+        if(this.state.redirect) {
+            return <Redirect to="/" />
+        }
+
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
